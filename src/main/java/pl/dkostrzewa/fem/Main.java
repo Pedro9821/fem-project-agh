@@ -1,7 +1,13 @@
 package pl.dkostrzewa.fem;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Main {
@@ -33,8 +39,8 @@ public class Main {
     private static void generateNodes(Globals globals, List femGridNodes) {
         double H = globals.getH();
         double W = globals.getW();
-        int nW = globals.getnW();
-        int nH = globals.getnH();
+        double nW = globals.getnW();
+        double nH = globals.getnH();
 
         double dX = W / (nW - 1);
         double dY = H / (nH - 1);
@@ -96,34 +102,43 @@ public class Main {
 
     }
 
-    public static void main(String[] args) {
+
+    @SuppressWarnings("unchecked")
+    public static void main(String[] args) throws FileNotFoundException {
         // write your code here
         List fileData = new ArrayList<String>();
-        InputStream inputstream = Main.class.getResourceAsStream("data.txt");
-        try {
-            //czytnaie z pliku i wrzucanie danych do listy
-            readFromInputStream(inputstream, fileData);
+        System.out.println(System.getProperty("user.dir"));
+        InputStream inputstream = new FileInputStream((System.getProperty("user.dir") + "/src/main/java/pl/dkostrzewa/fem/data.txt"));
+        Globals globals = new Globals();
+        System.out.println(globals);
+//        try {
+//            //czytnaie z pliku i wrzucanie danych do listy
+//            readFromInputStream(inputstream, fileData);
+//
+//            Globals globals = new Globals();
+//            setGlobalDataFromFile(globals, fileData);
+//
+//
+//
+//
+//            FemGrid femGrid = new FemGrid();
+//            List<Node> femGridNodes = femGrid.getNodes();
+//            List<Element> femGridElements = femGrid.getElements();
+//
+//            generateNodes(globals, femGridNodes);
+//            femGrid.showFemNodes();
+//
+//            generateElements(globals, femGridElements);
+//            femGrid.showFemElements();
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-            Globals globals = new Globals();
-            setGlobalDataFromFile(globals, fileData);
+        //JSON parser object to parse read file
 
 
-            System.out.println(globals);
-
-            FemGrid femGrid = new FemGrid();
-            List<Node> femGridNodes = femGrid.getNodes();
-            List<Element> femGridElements = femGrid.getElements();
-
-            generateNodes(globals, femGridNodes);
-            femGrid.showFemNodes();
-
-            generateElements(globals, femGridElements);
-            femGrid.showFemElements();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
