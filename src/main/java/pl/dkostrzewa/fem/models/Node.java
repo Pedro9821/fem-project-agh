@@ -1,4 +1,4 @@
-package pl.dkostrzewa.fem;
+package pl.dkostrzewa.fem.models;
 
 public class Node {
     private double x;

@@ -1,4 +1,4 @@
-package pl.dkostrzewa.fem;
+package pl.dkostrzewa.fem.models;
 
 import java.util.ArrayList;
 import java.util.List;

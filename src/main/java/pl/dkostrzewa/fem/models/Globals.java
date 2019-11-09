@@ -1,4 +1,4 @@
-package pl.dkostrzewa.fem;
+package pl.dkostrzewa.fem.models;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -29,6 +29,8 @@ public class Globals {
     private List<Double> wagi = new ArrayList<>();
     private int countWagi;
 
+
+
     public Globals(){
         this.readDataFromFile();
     }
@@ -37,7 +39,7 @@ public class Globals {
         JSONParser jsonParser = new JSONParser();
 
         try {
-            Object object = jsonParser.parse(new FileReader(System.getProperty("user.dir") + "/src/main/java/pl/dkostrzewa/fem/femdata.json"));
+            Object object = jsonParser.parse(new FileReader(System.getProperty("user.dir") + "/src/main/java/pl/dkostrzewa/fem/data/femdata.json"));
             //Read JSON file
             JSONObject jsonObject = (JSONObject) object;
 
