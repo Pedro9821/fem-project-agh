@@ -12,29 +12,7 @@ import java.util.List;
 
 public class Main {
 
-    private static void readFromInputStream(InputStream inputStream, List fileData)
-            throws IOException {
-        StringBuilder resultStringBuilder = new StringBuilder();
-        try (BufferedReader br
-                     = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                resultStringBuilder.append(line).append("\n");
-                fileData.add(line);
-            }
-        }
-        //  return resultStringBuilder.toString();
-    }
 
-    private static void setGlobalDataFromFile(Globals globals, List fileData) {
-        globals.setH(Double.parseDouble((String) fileData.get(0)));
-        globals.setW(Double.parseDouble((String) fileData.get(1)));
-        globals.setnH(Integer.parseInt((String) fileData.get(2)));
-        globals.setnW(Integer.parseInt((String) fileData.get(3)));
-
-        globals.setnN();
-        globals.setnE();
-    }
 
     private static void generateNodes(Globals globals, List femGridNodes) {
         double H = globals.getH();
@@ -111,6 +89,19 @@ public class Main {
         InputStream inputstream = new FileInputStream((System.getProperty("user.dir") + "/src/main/java/pl/dkostrzewa/fem/data.txt"));
         Globals globals = new Globals();
         System.out.println(globals);
+
+        FemGrid femGrid = new FemGrid();
+        List<Node> femGridNodes = femGrid.getNodes();
+        List<Element> femGridElements = femGrid.getElements();
+
+        generateNodes(globals, femGridNodes);
+        femGrid.showFemNodes();
+
+        generateElements(globals, femGridElements);
+        femGrid.showFemElements();
+
+
+
 //        try {
 //            //czytnaie z pliku i wrzucanie danych do listy
 //            readFromInputStream(inputstream, fileData);

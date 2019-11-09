@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,10 +23,10 @@ public class Globals {
     private double nN;
     private double nE;
 
-    private List pc;
+    private List<Double> pc = new ArrayList<>();
     private int countPc;
 
-    private List wagi;
+    private List<Double> wagi = new ArrayList<>();
     private int countWagi;
 
     public Globals(){
@@ -58,10 +59,30 @@ public class Globals {
                 this.wagi.add((Double)wagi);
             }
 
+            this.setnE();
+            this.setnN();
+
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setnN(){
+        this.nN = this.nH * this.nW;
+    }
+
+    public void setnE(){
+        this.nE = (nH-1)*(nW-1);
+    }
+
+
+    public double getnN() {
+        return nN;
+    }
+
+    public double getnE() {
+        return nE;
     }
 
     public double getH() {
@@ -96,21 +117,6 @@ public class Globals {
         this.nW = nW;
     }
 
-    public double getnN() {
-        return nN;
-    }
-
-    public void setnN() {
-        this.nN = nN;
-    }
-
-    public double getnE() {
-        return nE;
-    }
-
-    public void setnE() {
-        this.nE = nE;
-    }
 
     public List getPc() {
         return pc;
