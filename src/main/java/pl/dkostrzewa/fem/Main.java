@@ -1,18 +1,12 @@
 package pl.dkostrzewa.fem;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Main {
-
-
 
     private static void generateNodes(Globals globals, List femGridNodes) {
         double H = globals.getH();
@@ -99,35 +93,6 @@ public class Main {
 
         generateElements(globals, femGridElements);
         femGrid.showFemElements();
-
-
-
-//        try {
-//            //czytnaie z pliku i wrzucanie danych do listy
-//            readFromInputStream(inputstream, fileData);
-//
-//            Globals globals = new Globals();
-//            setGlobalDataFromFile(globals, fileData);
-//
-//
-//
-//
-//            FemGrid femGrid = new FemGrid();
-//            List<Node> femGridNodes = femGrid.getNodes();
-//            List<Element> femGridElements = femGrid.getElements();
-//
-//            generateNodes(globals, femGridNodes);
-//            femGrid.showFemNodes();
-//
-//            generateElements(globals, femGridElements);
-//            femGrid.showFemElements();
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        //JSON parser object to parse read file
 
 
     }
