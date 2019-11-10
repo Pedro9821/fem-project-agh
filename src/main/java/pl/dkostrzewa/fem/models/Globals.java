@@ -24,18 +24,18 @@ public class Globals {
     private double nE;
 
     private List<Double> pc = new ArrayList<>();
+    private List<GaussInterpolationNode> integrationPoints = new ArrayList<>();
     private int countPc;
 
     private List<Double> wagi = new ArrayList<>();
     private int countWagi;
 
 
-
-    public Globals(){
+    public Globals() {
         this.readDataFromFile();
     }
 
-    public void readDataFromFile(){
+    public void readDataFromFile() {
         JSONParser jsonParser = new JSONParser();
 
         try {
@@ -47,22 +47,32 @@ public class Globals {
             this.W = (double) jsonObject.get("W");
             this.nH = (double) jsonObject.get("nH");
             this.nW = (double) jsonObject.get("nW");
+            this.nN = this.nH * this.nW;
+            this.nE = (nH - 1) * (nW - 1);
 
             JSONArray pcJsonArray = (JSONArray) jsonObject.get("pC");
             this.countPc = pcJsonArray.size();
-            for(Object item: pcJsonArray){
-                Double pcItem = (Double)item;
+            for (Object item : pcJsonArray) {
+                Double pcItem = (Double) item;
                 this.pc.add(pcItem);
             }
 
-            JSONArray wagiJsonArray = (JSONArray) jsonObject.get("wagi");
+
+            JSONArray wagiJsonArray = (JSONArray) jsonObject.get("weights");
             this.countWagi = wagiJsonArray.size();
-            for(Object wagi: wagiJsonArray){
-                this.wagi.add((Double)wagi);
+            for (Object wagi : wagiJsonArray) {
+                this.wagi.add((Double) wagi);
             }
 
-            this.setnE();
-            this.setnN();
+            for (int i = 0; i < countPc; i++) {
+                for (int j = 0; j < countPc; j++) {
+                    integrationPoints.add(new GaussInterpolationNode(this.pc.get(i), this.pc.get(j)));
+                }
+            }
+
+
+            //this.setnE();
+            //this.setnN();
 
 
         } catch (IOException | ParseException e) {
@@ -70,14 +80,14 @@ public class Globals {
         }
     }
 
-    public void setnN(){
-        this.nN = this.nH * this.nW;
+
+    public void setnN(double nN) {
+        this.nN = nN;
     }
 
-    public void setnE(){
-        this.nE = (nH-1)*(nW-1);
+    public void setnE(double nE) {
+        this.nE = nE;
     }
-
 
     public double getnN() {
         return nN;
@@ -150,6 +160,14 @@ public class Globals {
 
     public void setCountWagi(int countWagi) {
         this.countWagi = countWagi;
+    }
+
+    public List<GaussInterpolationNode> getIntegrationPoints() {
+        return integrationPoints;
+    }
+
+    public void setIntegrationPoints(List<GaussInterpolationNode> integrationPoints) {
+        this.integrationPoints = integrationPoints;
     }
 
     @Override
