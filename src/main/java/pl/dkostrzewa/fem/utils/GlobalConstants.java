@@ -34,19 +34,19 @@ public class GlobalConstants {
         return -(1 + ni) / 4;
     }
 
-    public static double shapeFunctionNiDerivative1(double ksi) {
+    public static double shapeFunctionEtaDerivative1(double ksi) {
         return -(1 - ksi) / 4;
     }
 
-    public static double shapeFunctionNiDerivative2(double ksi) {
+    public static double shapeFunctionEtaDerivative2(double ksi) {
         return -(1 + ksi) / 4;
     }
 
-    public static double shapeFunctionNiDerivative3(double ksi) {
+    public static double shapeFunctionEtaDerivative3(double ksi) {
         return (1 + ksi) / 4;
     }
 
-    public static double shapeFunctionNiDerivative4(double ksi) {
+    public static double shapeFunctionEtaDerivative4(double ksi) {
         return (1 - ksi) / 4;
     }
 

@@ -34,4 +34,13 @@ public class GaussInterpolationNode {
     public void setWeight(double weight) {
         this.weight = weight;
     }
+
+    @Override
+    public String toString() {
+        return "GaussInterpolationNode{" +
+                "ksi=" + ksi +
+                ", eta=" + eta +
+                ", weight=" + weight +
+                '}';
+    }
 }

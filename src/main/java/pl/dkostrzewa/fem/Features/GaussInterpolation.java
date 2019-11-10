@@ -38,10 +38,10 @@ public class GaussInterpolation {
             int index = i == 0 || i == 3 ? 0 : 1; //wspolrzednia ksi
             //double selectedPc = (Double) pc.get(index);
             double selectedPc = (Double) globals.getIntegrationPoints().get(i).getKsi();
-            etaDerivatives[i][0] = GlobalConstants.shapeFunctionNiDerivative1(selectedPc);
-            etaDerivatives[i][1] = GlobalConstants.shapeFunctionNiDerivative2(selectedPc);
-            etaDerivatives[i][2] = GlobalConstants.shapeFunctionNiDerivative3(selectedPc);
-            etaDerivatives[i][3] = GlobalConstants.shapeFunctionNiDerivative4(selectedPc);
+            etaDerivatives[i][0] = GlobalConstants.shapeFunctionEtaDerivative1(selectedPc);
+            etaDerivatives[i][1] = GlobalConstants.shapeFunctionEtaDerivative2(selectedPc);
+            etaDerivatives[i][2] = GlobalConstants.shapeFunctionEtaDerivative3(selectedPc);
+            etaDerivatives[i][3] = GlobalConstants.shapeFunctionEtaDerivative4(selectedPc);
         }
 
         return etaDerivatives;

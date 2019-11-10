@@ -66,8 +66,13 @@ public class Globals {
 
             for (int i = 0; i < countPc; i++) {
                 for (int j = 0; j < countPc; j++) {
-                    integrationPoints.add(new GaussInterpolationNode(this.pc.get(i), this.pc.get(j)));
+                    //ustawienie wspolrzednych ksi i eta punktow calkowania
+                    integrationPoints.add(new GaussInterpolationNode(this.pc.get(j), this.pc.get(i)));
                 }
+            }
+
+            for(Object item : integrationPoints){
+                System.out.println(item);
             }
 
 
