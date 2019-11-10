@@ -1,7 +1,7 @@
 package pl.dkostrzewa.fem;
 
-import pl.dkostrzewa.fem.Features.FemGridGenerator;
-import pl.dkostrzewa.fem.Features.GaussInterpolation;
+import pl.dkostrzewa.fem.features.FemGridGenerator;
+import pl.dkostrzewa.fem.features.GaussInterpolation;
 import pl.dkostrzewa.fem.models.FemGrid;
 import pl.dkostrzewa.fem.models.Globals;
 

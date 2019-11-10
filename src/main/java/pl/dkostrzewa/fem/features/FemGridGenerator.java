@@ -1,4 +1,4 @@
-package pl.dkostrzewa.fem.Features;
+package pl.dkostrzewa.fem.features;
 
 import pl.dkostrzewa.fem.models.Element;
 import pl.dkostrzewa.fem.models.FemGrid;
