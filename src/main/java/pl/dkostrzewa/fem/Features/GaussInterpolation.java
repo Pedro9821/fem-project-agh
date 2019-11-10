@@ -17,7 +17,8 @@ public class GaussInterpolation {
 
         for (int i = 0; i < numberPc; i++) {
             int index = i < 2 ? 0 : 1; //wspolredne eta
-            double selectedPc = (Double) pc.get(index);
+            //double selectedPc = (Double) pc.get(index);
+            double selectedPc = (Double) globals.getIntegrationPoints().get(i).getEta();
             ksiDerivatives[i][0] = GlobalConstants.shapeFunctionKsiDerivative1(selectedPc);
             ksiDerivatives[i][1] = GlobalConstants.shapeFunctionKsiDerivative2(selectedPc);
             ksiDerivatives[i][2] = GlobalConstants.shapeFunctionKsiDerivative3(selectedPc);
@@ -35,11 +36,12 @@ public class GaussInterpolation {
 
         for (int i = 0; i < numberPc; i++) {
             int index = i == 0 || i == 3 ? 0 : 1; //wspolrzednia ksi
-            double selectedPc = (Double) pc.get(index);
-            etaDerivatives[i][0] = GlobalConstants.shapeFunctionNiDerivative1(selectedPc);
-            etaDerivatives[i][1] = GlobalConstants.shapeFunctionNiDerivative2(selectedPc);
-            etaDerivatives[i][2] = GlobalConstants.shapeFunctionNiDerivative3(selectedPc);
-            etaDerivatives[i][3] = GlobalConstants.shapeFunctionNiDerivative4(selectedPc);
+            //double selectedPc = (Double) pc.get(index);
+            double selectedPc = (Double) globals.getIntegrationPoints().get(i).getKsi();
+            etaDerivatives[i][0] = GlobalConstants.shapeFunctionEtaDerivative1(selectedPc);
+            etaDerivatives[i][1] = GlobalConstants.shapeFunctionEtaDerivative2(selectedPc);
+            etaDerivatives[i][2] = GlobalConstants.shapeFunctionEtaDerivative3(selectedPc);
+            etaDerivatives[i][3] = GlobalConstants.shapeFunctionEtaDerivative4(selectedPc);
         }
 
         return etaDerivatives;
@@ -53,11 +55,12 @@ public class GaussInterpolation {
         for (int i = 0; i < numberPc; i++) {
             int indexKsi = i == 0 || i == 3 ? 0 : 1;
             int indexEta = i < 2 ? 0 : 1;
-
-            shapeFunctionValues[i][0] = GlobalConstants.shapeFunction1((double) pc.get(indexKsi), (double) pc.get(indexEta));
-            shapeFunctionValues[i][1] = GlobalConstants.shapeFunction2((double) pc.get(indexKsi), (double) pc.get(indexEta));
-            shapeFunctionValues[i][2] = GlobalConstants.shapeFunction3((double) pc.get(indexKsi), (double) pc.get(indexEta));
-            shapeFunctionValues[i][3] = GlobalConstants.shapeFunction4((double) pc.get(indexKsi), (double) pc.get(indexEta));
+            double eta = (Double) globals.getIntegrationPoints().get(i).getEta();
+            double ksi = (Double) globals.getIntegrationPoints().get(i).getKsi();
+            shapeFunctionValues[i][0] = GlobalConstants.shapeFunction1(ksi, eta);
+            shapeFunctionValues[i][1] = GlobalConstants.shapeFunction2(ksi, eta);
+            shapeFunctionValues[i][2] = GlobalConstants.shapeFunction3(ksi, eta);
+            shapeFunctionValues[i][3] = GlobalConstants.shapeFunction4(ksi, eta);
 
         }
         return shapeFunctionValues;
