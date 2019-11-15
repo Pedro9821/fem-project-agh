@@ -31,11 +31,11 @@ public class FemGridGenerator {
 
         double dX = W / (nW - 1);
         double dY = H / (nH - 1);
-
+        int nodeId = 0;
         for (double i = 0; i < nW; i++) {
 
             for (double j = 0; j < nH; j++) {
-
+                nodeId++;
                 Node node = new Node();
                 double x = i * dX;
                 double y = j * dY;
@@ -46,6 +46,7 @@ public class FemGridGenerator {
 
                 node.setX(x);
                 node.setY(y);
+                node.setId(nodeId);
                 femGridNodes.add(node);
             }
         }

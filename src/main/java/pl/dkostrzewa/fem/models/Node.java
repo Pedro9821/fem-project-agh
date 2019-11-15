@@ -1,6 +1,7 @@
 package pl.dkostrzewa.fem.models;
 
 public class Node {
+    private int id;
     private double x;
     private double y;
     private double t;
@@ -39,10 +40,19 @@ public class Node {
         this.bc = bc;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Node{" +
-                "x=" + x +
+                "id=" + id +
+                ", x=" + x +
                 ", y=" + y +
                 ", t=" + t +
                 ", bc=" + bc +
