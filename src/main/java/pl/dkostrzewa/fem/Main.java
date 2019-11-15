@@ -48,6 +48,8 @@ public class Main {
             System.out.println();
         }
 
+        System.out.println(femGrid.getNodes().get((Integer) femGrid.getElements().get(0).getiDs().get(1)));
+
     }
 
 
