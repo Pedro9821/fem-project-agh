@@ -82,7 +82,10 @@ public class Main {
 //        }
 
         for(Element element : femGrid.getElements()){
-            HMatrixForElement.generateH(element,femGrid.getNodes(),ksi,eta);
+            HMatrixForElement.generateH(element,femGrid.getNodes(),ksi,eta,globals);
+            System.out.println();
+            System.out.println("MATRIX [H]: ");
+            GlobalConstants.printMatrixNxM(element.getH(),4,4);
         }
 
         System.out.println();

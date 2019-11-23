@@ -112,7 +112,7 @@ public class GlobalConstants {
     public static void printMatrixNxM (double[][] m, int N, int M){
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                System.out.print(m[i][j]+" ");
+                System.out.print(m[i][j]+"\t");
             }
             System.out.println();
         }

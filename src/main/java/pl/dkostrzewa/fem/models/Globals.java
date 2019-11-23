@@ -22,6 +22,7 @@ public class Globals {
 
     private double nN;
     private double nE;
+    private double k;
 
     private List<Double> pc = new ArrayList<>();
     private List<GaussInterpolationNode> integrationPoints = new ArrayList<>();
@@ -45,6 +46,7 @@ public class Globals {
 
             this.H = (double) jsonObject.get("H");
             this.W = (double) jsonObject.get("W");
+            this.k = (double) jsonObject.get("k");
             this.nH = (double) jsonObject.get("nH");
             this.nW = (double) jsonObject.get("nW");
             this.nN = this.nH * this.nW;
@@ -52,15 +54,15 @@ public class Globals {
 
             JSONArray pcJsonArray = (JSONArray) jsonObject.get("pC");
             this.countPc = pcJsonArray.size();
-//            for (Object item : pcJsonArray) {
-//                Double pcItem = (Double) item;
-//
-//                this.pc.add(pcItem);
-//            }
-            Double pc1 = -(1/Math.sqrt(3));
-            Double pc2 = (1/Math.sqrt(3));
-            this.pc.add(pc1);
-            this.pc.add(pc2);
+            for (Object item : pcJsonArray) {
+                Double pcItem = (Double) item;
+
+                this.pc.add(pcItem);
+            }
+//            Double pc1 = -(1/Math.sqrt(3));
+//            Double pc2 = (1/Math.sqrt(3));
+//            this.pc.add(pc1);
+//            this.pc.add(pc2);
 
 
             JSONArray wagiJsonArray = (JSONArray) jsonObject.get("weights");
@@ -76,9 +78,9 @@ public class Globals {
                 }
             }
 
-            for(Object item : integrationPoints){
-                System.out.println(item);
-            }
+//            for(Object item : integrationPoints){
+//                System.out.println(item);
+//            }
 
 
             //this.setnE();
@@ -178,6 +180,14 @@ public class Globals {
 
     public void setIntegrationPoints(List<GaussInterpolationNode> integrationPoints) {
         this.integrationPoints = integrationPoints;
+    }
+
+    public double getK() {
+        return k;
+    }
+
+    public void setK(double k) {
+        this.k = k;
     }
 
     @Override

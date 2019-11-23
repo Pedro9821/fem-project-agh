@@ -1,6 +1,7 @@
 package pl.dkostrzewa.fem.features;
 
 import pl.dkostrzewa.fem.models.Element;
+import pl.dkostrzewa.fem.models.Globals;
 import pl.dkostrzewa.fem.models.Node;
 import pl.dkostrzewa.fem.utils.GlobalConstants;
 
@@ -26,7 +27,7 @@ public class HMatrixForElement {
     }
 
 
-    public static double[][] generateH(Element element, List<Node> nodes, double[][] dNdKsi, double[][] dNdEta) {
+    public static double[][] generateH(Element element, List<Node> nodes, double[][] dNdKsi, double[][] dNdEta, Globals globals) {
         double[][] H = new double[4][4];
 
         for (int p = 0; p < 4; p++) {
@@ -39,10 +40,10 @@ public class HMatrixForElement {
             double[][] jacobian = generateJacobianForElement(element, nodes, dNdKsi[p], dNdEta[p]);
             double detJacobian = (jacobian[0][0] * jacobian[1][1]) - (jacobian[0][1] * jacobian[1][0]);
 
-            System.out.println("Jacobian for: " + (p + 1) + " integration point");
-            GlobalConstants.printMatrixNxM(jacobian, 2, 2);
-            System.out.println("Det[J]=" + detJacobian);
-            System.out.println();
+//            System.out.println("Jacobian for: " + (p + 1) + " integration point");
+//            GlobalConstants.printMatrixNxM(jacobian, 2, 2);
+//            System.out.println("Det[J]=" + detJacobian);
+//            System.out.println();
 
 
             double[][] reverseJacobian = new double[2][2];
@@ -56,9 +57,9 @@ public class HMatrixForElement {
             reverseJacobian[1][0] = (1 / detJacobian) * reverseJacobian[1][0];
             reverseJacobian[1][1] = (1 / detJacobian) * reverseJacobian[1][1];
 
-            System.out.println("Reverse Jacobian for: " + (p + 1) + " integration point");
-            GlobalConstants.printMatrixNxM(reverseJacobian, 2, 2);
-            System.out.println();
+//            System.out.println("Reverse Jacobian for: " + (p + 1) + " integration point");
+//            GlobalConstants.printMatrixNxM(reverseJacobian, 2, 2);
+//            System.out.println();
 
             double[][] dNdKsidEta = new double[2][4];
             dNdKsidEta[0][0] = dNdKsi[p][0];
@@ -93,7 +94,7 @@ public class HMatrixForElement {
 
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 4; j++) {
-                    H[i][j] += 25 * (X[i][j] + Y[i][j]) * detJacobian;
+                    H[i][j] += globals.getK() * (X[i][j] + Y[i][j]) * detJacobian;
                 }
             }
 
