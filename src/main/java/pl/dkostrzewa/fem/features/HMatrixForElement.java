@@ -22,8 +22,6 @@ public class HMatrixForElement {
         jacobian[1][0] = dxdeta;
         jacobian[1][1] = dydeta;
 
-        double detJacobian = (jacobian[0][0] * jacobian[1][1]) - (jacobian[0][1] * jacobian[1][0]);
-
         return jacobian;
     }
 
