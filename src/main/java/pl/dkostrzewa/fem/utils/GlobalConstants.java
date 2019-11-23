@@ -3,6 +3,7 @@ package pl.dkostrzewa.fem.utils;
 import pl.dkostrzewa.fem.models.Element;
 import pl.dkostrzewa.fem.models.Node;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class GlobalConstants {
@@ -55,7 +56,7 @@ public class GlobalConstants {
         return (1 - ksi) / 4;
     }
 
-    public static double jacobianDerivativesX(double[] shapeFunctionDeratives, Element element, List<Node> nodes) {
+    public static Double jacobianDerivativesX(double[] shapeFunctionDerivatives, Element element, List<Node> nodes) {
         double result = 0.0;
         List<Integer> elementIds = element.getiDs();
 
@@ -72,13 +73,13 @@ public class GlobalConstants {
         x[3] = x4;
 
         for (int i = 0; i < 4; i++) {
-            result += shapeFunctionDeratives[i] * x[i];
+            result += shapeFunctionDerivatives[i] * x[i];
         }
 
         return result;
     }
 
-    public static double jacobianDerivativesY(double[] shapeFunctionDeratives, Element element, List<Node> nodes) {
+    public static double jacobianDerivativesY(double[] shapeFunctionDerivatives, Element element, List<Node> nodes) {
         double result = 0;
         List elementIds = element.getiDs();
 
@@ -94,10 +95,27 @@ public class GlobalConstants {
         y[3] = y4;
 
         for (int i = 0; i < 4; i++) {
-            result += shapeFunctionDeratives[i] * y[i];
+            result += shapeFunctionDerivatives[i] * y[i];
         }
 
         return result;
+    }
+
+    public static double dNdx(double dYdKsi, double dYdEta, double dNdKsi, double dNdEta){
+        return dYdEta*dNdKsi + dYdKsi*dNdEta;
+    }
+
+    public static double dNdy(double dXdKsi, double dXdEta, double dNdKsi, double dNdEta){
+        return dXdEta*dNdKsi + dXdKsi*dNdEta;
+    }
+
+    public static void printMatrixNxM (double[][] m, int N, int M){
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                System.out.print(m[i][j]+" ");
+            }
+            System.out.println();
+        }
     }
 
 

@@ -52,10 +52,15 @@ public class Globals {
 
             JSONArray pcJsonArray = (JSONArray) jsonObject.get("pC");
             this.countPc = pcJsonArray.size();
-            for (Object item : pcJsonArray) {
-                Double pcItem = (Double) item;
-                this.pc.add(pcItem);
-            }
+//            for (Object item : pcJsonArray) {
+//                Double pcItem = (Double) item;
+//
+//                this.pc.add(pcItem);
+//            }
+            Double pc1 = -(1/Math.sqrt(3));
+            Double pc2 = (1/Math.sqrt(3));
+            this.pc.add(pc1);
+            this.pc.add(pc2);
 
 
             JSONArray wagiJsonArray = (JSONArray) jsonObject.get("weights");
