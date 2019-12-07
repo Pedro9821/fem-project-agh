@@ -2,13 +2,13 @@ package pl.dkostrzewa.fem;
 
 import pl.dkostrzewa.fem.features.FemGridGenerator;
 import pl.dkostrzewa.fem.features.GaussInterpolation;
-import pl.dkostrzewa.fem.features.HMatrixForElement;
+import pl.dkostrzewa.fem.features.MatrixForElement;
 import pl.dkostrzewa.fem.models.Element;
 import pl.dkostrzewa.fem.models.FemGrid;
 import pl.dkostrzewa.fem.models.Globals;
 import pl.dkostrzewa.fem.utils.GlobalConstants;
 
-import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -54,54 +54,35 @@ public class Main {
         }
 
 
-        // System.out.println(femGrid.getNodes().get((Integer) femGrid.getElements().get(0).getiDs().get(1)));
-        // Element selectedElement = femGrid.getElements().get(7);
-//
-//        for (Element selectedElement : femGrid.getElements()) {
-//            double[][] jacobianPC1 = HMatrixForElement.generateJacobianForElement(selectedElement, femGrid.getNodes(), ksi[0], eta[0]);
-//            double[][] jacobianPC2 = HMatrixForElement.generateJacobianForElement(selectedElement, femGrid.getNodes(), ksi[1], eta[1]);
-//            double[][] jacobianPC3 = HMatrixForElement.generateJacobianForElement(selectedElement, femGrid.getNodes(), ksi[2], eta[2]);
-//            double[][] jacobianPC4 = HMatrixForElement.generateJacobianForElement(selectedElement, femGrid.getNodes(), ksi[3], eta[3]);
-//
-//
-//
-//            selectedElement.setJacobian1(jacobianPC1);
-//            selectedElement.setJacobian2(jacobianPC2);
-//            selectedElement.setJacobian3(jacobianPC3);
-//            selectedElement.setJacobian4(jacobianPC4);
-//
-//        }
-//
-//        Element el = femGrid.getElements().get(3);
-//        double[][] j1 = el.getJacobian3();
-//        for (int i = 0; i < 2; i++) {
-//            for (int j = 0; j < 2; j++) {
-//                System.out.print(j1[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
+        for (Element element : femGrid.getElements()) {
+            MatrixForElement.generateH(element, ksi, eta, globals);
+            MatrixForElement.generateC(element, ksi, eta, shapeFunctions, globals);
+            MatrixForElement.generateHbc(element, globals);
+           // System.out.println();
+           // System.out.println("MATRIX [H]: ");
+           // GlobalConstants.printMatrixNxM(element.getH(), 4, 4);
+            //System.out.println("MATRIX [C]: ");
+            //GlobalConstants.printMatrixNxM(element.getC(), 4, 4);
 
-        for(Element element : femGrid.getElements()){
-            HMatrixForElement.generateH(element,femGrid.getNodes(),ksi,eta,globals);
-            System.out.println();
-            System.out.println("MATRIX [H]: ");
-            GlobalConstants.printMatrixNxM(element.getH(),4,4);
+
+
+
         }
 
         System.out.println();
+        System.out.println();
+        System.out.println();
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Select Finite Element <1,"+(femGrid.getElements().size())+">");
+        int elementNo = keyboard.nextInt()-1;
+        Element el = femGrid.getElements().get(elementNo);
+        System.out.println(el);
         System.out.println("MATRIX [H]: ");
-        Element el = femGrid.getElements().get(4);
-
-        GlobalConstants.printMatrixNxM(el.getH(),4,4);
-
-//        double[][] H = HMatrixForElement.generateH(el,femGrid.getNodes(),ksi,eta);
-//
-//        for (int i = 0; i < 4; i++) {
-//            for (int j = 0; j < 4; j++) {
-//               System.out.print(H[i][j]+" ");
-//            }
-//            System.out.println();
-//        }
+        GlobalConstants.printMatrixNxM(el.getH(), 4, 4);
+        System.out.println("MATRIX [C]: ");
+        GlobalConstants.printMatrixNxM(el.getC(), 4, 4);
+        System.out.println("MATRIX [Hbc]: ");
+        GlobalConstants.printMatrixNxM(el.getHbc(), 4, 4);
 
 
     }

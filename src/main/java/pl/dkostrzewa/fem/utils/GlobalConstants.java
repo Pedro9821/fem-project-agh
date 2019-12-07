@@ -8,6 +8,10 @@ import java.util.List;
 
 public class GlobalConstants {
 
+    private static double pc = 1 / Math.sqrt(3);
+
+    public static double[][] ksiEtaSurface = {{-pc, -1, pc, -1}, {1, -pc, 1, pc}, {pc, 1, -pc, 1}, {-1, pc, -1, -pc}};
+
     public static double shapeFunction1(double ksi, double ni) {
         return (1 - ksi) * (1 - ni) / 4;
     }
@@ -65,7 +69,7 @@ public class GlobalConstants {
         int id1 = elementIds.get(0) - 1;
         double x1 = elementNodes.get(0).getX();
         double x2 = elementNodes.get(1).getX();
-        double x3 =elementNodes.get(2).getX();
+        double x3 = elementNodes.get(2).getX();
         double x4 = elementNodes.get(3).getX();
 
         x[0] = x1;
@@ -103,18 +107,18 @@ public class GlobalConstants {
         return result;
     }
 
-    public static double dNdx(double dYdKsi, double dYdEta, double dNdKsi, double dNdEta){
-        return dYdEta*dNdKsi + dYdKsi*dNdEta;
+    public static double dNdx(double dYdKsi, double dYdEta, double dNdKsi, double dNdEta) {
+        return dYdEta * dNdKsi + dYdKsi * dNdEta;
     }
 
-    public static double dNdy(double dXdKsi, double dXdEta, double dNdKsi, double dNdEta){
-        return dXdEta*dNdKsi + dXdKsi*dNdEta;
+    public static double dNdy(double dXdKsi, double dXdEta, double dNdKsi, double dNdEta) {
+        return dXdEta * dNdKsi + dXdKsi * dNdEta;
     }
 
-    public static void printMatrixNxM (double[][] m, int N, int M){
+    public static void printMatrixNxM(double[][] m, int N, int M) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                System.out.print(m[i][j]+"\t");
+                System.out.print(m[i][j] + "\t");
             }
             System.out.println();
         }

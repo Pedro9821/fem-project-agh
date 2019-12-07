@@ -23,6 +23,10 @@ public class Globals {
     private double nN;
     private double nE;
     private double k;
+    private double c;
+    private double ro;
+    private double alfa;
+    private double T;
 
     private List<Double> pc = new ArrayList<>();
     private List<GaussInterpolationNode> integrationPoints = new ArrayList<>();
@@ -49,6 +53,10 @@ public class Globals {
             this.k = (double) jsonObject.get("k");
             this.nH = (double) jsonObject.get("nH");
             this.nW = (double) jsonObject.get("nW");
+            this.c = (double) jsonObject.get("c");
+            this.ro = (double) jsonObject.get("ro");
+            this.alfa = (double) jsonObject.get("alfa");
+            this.T = (double) jsonObject.get("T");
             this.nN = this.nH * this.nW;
             this.nE = (nH - 1) * (nW - 1);
 
@@ -182,8 +190,32 @@ public class Globals {
         this.integrationPoints = integrationPoints;
     }
 
+    public double getC() {
+        return c;
+    }
+
+    public void setC(double c) {
+        this.c = c;
+    }
+
+    public double getRo() {
+        return ro;
+    }
+
+    public void setRo(double ro) {
+        this.ro = ro;
+    }
+
     public double getK() {
         return k;
+    }
+
+    public double getAlfa() {
+        return alfa;
+    }
+
+    public void setAlfa(double alfa) {
+        this.alfa = alfa;
     }
 
     public void setK(double k) {

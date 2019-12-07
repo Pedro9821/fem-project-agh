@@ -66,4 +66,17 @@ public class GaussInterpolation {
         return shapeFunctionValues;
 
     }
+
+    public static double[][] countNfunctionForSurface(double[] ksi, double[] eta) {
+        double[][] dN = new double[2][4];
+        for (int i = 0; i < 2; i++) {
+            dN[i][0] = GlobalConstants.shapeFunction1(ksi[i], eta[i]);
+            dN[i][1] = GlobalConstants.shapeFunction2(ksi[i], eta[i]);
+            dN[i][2] = GlobalConstants.shapeFunction3(ksi[i], eta[i]);
+            dN[i][3] = GlobalConstants.shapeFunction4(ksi[i], eta[i]);
+
+        }
+
+        return dN;
+    }
 }

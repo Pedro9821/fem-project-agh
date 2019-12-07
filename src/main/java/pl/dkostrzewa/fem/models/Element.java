@@ -6,8 +6,25 @@ public class Element {
     private List<Integer> iDs;
     private List<Node> nodes;
     private double[][] H = new double[4][4];
-    private Double[][] C = new Double[4][4];
-    private Double[][] Hbc = new Double[4][4];
+    private double[][] C = new double[4][4];
+    private double[][] Hbc = new double[4][4];
+
+    public double[][] getC() {
+        return C;
+    }
+
+    public void setC(double[][] c) {
+        C = c;
+    }
+
+    public double[][] getHbc() {
+        return Hbc;
+    }
+
+    public void setHbc(double[][] hbc) {
+        Hbc = hbc;
+    }
+
 
 
     public Element() {
