@@ -56,16 +56,17 @@ public class GlobalConstants {
         return (1 - ksi) / 4;
     }
 
-    public static Double jacobianDerivativesX(double[] shapeFunctionDerivatives, Element element, List<Node> nodes) {
+    public static Double jacobianDerivativesX(double[] shapeFunctionDerivatives, Element element) {
         double result = 0.0;
         List<Integer> elementIds = element.getiDs();
+        List<Node> elementNodes = element.getNodes();
 
         double[] x = new double[4];
         int id1 = elementIds.get(0) - 1;
-        double x1 = nodes.get(elementIds.get(0) - 1).getX();
-        double x2 = nodes.get(((Integer) elementIds.get(1)) - 1).getX();
-        double x3 = nodes.get(((Integer) elementIds.get(2)) - 1).getX();
-        double x4 = nodes.get(((Integer) elementIds.get(3)) - 1).getX();
+        double x1 = elementNodes.get(0).getX();
+        double x2 = elementNodes.get(1).getX();
+        double x3 =elementNodes.get(2).getX();
+        double x4 = elementNodes.get(3).getX();
 
         x[0] = x1;
         x[1] = x2;
@@ -79,15 +80,16 @@ public class GlobalConstants {
         return result;
     }
 
-    public static double jacobianDerivativesY(double[] shapeFunctionDerivatives, Element element, List<Node> nodes) {
+    public static double jacobianDerivativesY(double[] shapeFunctionDerivatives, Element element) {
         double result = 0;
         List elementIds = element.getiDs();
+        List<Node> elementNodes = element.getNodes();
 
         double[] y = new double[4];
-        double y1 = nodes.get((Integer) elementIds.get(0) - 1).getY();
-        double y2 = nodes.get((Integer) elementIds.get(1) - 1).getY();
-        double y3 = nodes.get((Integer) elementIds.get(2) - 1).getY();
-        double y4 = nodes.get((Integer) elementIds.get(3) - 1).getY();
+        double y1 = elementNodes.get(0).getY();
+        double y2 = elementNodes.get(1).getY();
+        double y3 = elementNodes.get(2).getY();
+        double y4 = elementNodes.get(3).getY();
 
         y[0] = y1;
         y[1] = y2;

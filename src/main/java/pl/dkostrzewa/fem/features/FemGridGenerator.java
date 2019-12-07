@@ -9,10 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FemGridGenerator {
+
+    private List<Node> femGridNodes;
+    List<Element> femGridElements;
+
     public FemGrid generateFemGrid(Globals globals){
         FemGrid femGrid = new FemGrid();
-        List<Node> femGridNodes = femGrid.getNodes();
-        List<Element> femGridElements = femGrid.getElements();
+        femGridNodes = femGrid.getNodes();
+        femGridElements = femGrid.getElements();
 
         generateNodes(globals, femGridNodes);
         //femGrid.showFemNodes();
@@ -52,7 +56,7 @@ public class FemGridGenerator {
         }
     }
 
-    private static void generateElements(Globals globals, List femGridElements) {
+    private void generateElements(Globals globals, List femGridElements) {
         double nH = globals.getnH();
         double nE = globals.getnE();
         double nN = globals.getnN();
@@ -71,6 +75,8 @@ public class FemGridGenerator {
 
             Element element = new Element();
             List<Integer> iDs = new ArrayList<>();
+            List<Node> nodes = new ArrayList<>();
+
 
             int id1 = i;
             int id2 = (int) (id1 + nH);
@@ -82,7 +88,13 @@ public class FemGridGenerator {
             iDs.add(id3);
             iDs.add(id4);
 
+            nodes.add(this.femGridNodes.get(id1-1));
+            nodes.add(this.femGridNodes.get(id2-1));
+            nodes.add(this.femGridNodes.get(id3-1));
+            nodes.add(this.femGridNodes.get(id4-1));
+
             element.setiDs(iDs);
+            element.setNodes(nodes);
 
             femGridElements.add(element);
 
