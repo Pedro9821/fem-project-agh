@@ -136,79 +136,6 @@ public class MatrixForElement {
         }
 
 
-//        double[] ksiPow1 = new double[2];
-//        double[] etaPow1 = new double[2];
-//
-//        double[] ksiPow2 = new double[2];
-//        double[] etaPow2 = new double[2];
-//
-//        double[] ksiPow3 = new double[2];
-//        double[] etaPow3 = new double[2];
-//
-//        double[] ksiPow4 = new double[2];
-//        double[] etaPow4 = new double[2];
-//
-//        ksiPow1[0] = -pc;
-//        ksiPow1[1] = pc;
-//        etaPow1[0] = -1;
-//        etaPow1[1] = -1;
-//
-//        ksiPow2[0] = 1;
-//        ksiPow2[1] = 1;
-//        etaPow2[0] = -pc;
-//        etaPow2[1] = pc;
-//
-//        ksiPow3[0] = pc;
-//        ksiPow3[1] = -pc;
-//        etaPow3[0] = 1;
-//        etaPow3[1] = 1;
-//
-//        ksiPow4[0] = -1;
-//        ksiPow4[1] = -1;
-//        etaPow4[0] = pc;
-//        etaPow4[1] = -pc;
-//
-//
-//        double[][] pow1 = new double[2][4];
-//        double[][] pow2 = new double[2][4];
-//        double[][] pow3 = new double[2][4];
-//        double[][] pow4 = new double[2][4];
-//
-//
-//        for (int i = 0; i < 2; i++) {
-//            pow1 = GaussInterpolation.countNfunctionForSurface(ksiPow1, etaPow1);
-//            pow2 = GaussInterpolation.countNfunctionForSurface(ksiPow2, etaPow2);
-//            pow3 = GaussInterpolation.countNfunctionForSurface(ksiPow3, etaPow3);
-//            pow4 = GaussInterpolation.countNfunctionForSurface(ksiPow4, etaPow4);
-//        }
-//
-//        double lPow1 = Math.sqrt(Math.pow(nodes.get(1).getX() - nodes.get(0).getX(), 2) + Math.pow(nodes.get(1).getY() - nodes.get(0).getY(), 2));
-//        double detPow1 = lPow1 / 2;
-//        double[][] POW1_1 = VxV(pow1[0], pow1[0]);
-//        double[][] POW1_2 = VxV(pow1[1], pow1[1]);
-//
-//
-//        for (int i = 0; i < POW1_1.length; i++) {
-//            for (int j = 0; j < POW1_1[i].length; j++) {
-//                POW1_1[i][j] *= globals.getAlfa();
-//            }
-//        }
-//
-//        for (int i = 0; i < POW1_2.length; i++) {
-//            for (int j = 0; j < POW1_2[i].length; j++) {
-//                POW1_2[i][j] *= globals.getAlfa();
-//            }
-//        }
-//
-//        double[][] POW1 = sumMatrix(POW1_1, POW1_2);
-//        for (int i = 0; i < POW1.length; i++) {
-//            for (int j = 0; j < POW1[i].length; j++) {
-//                POW1[i][j] *= detPow1;
-//            }
-//        }
-
-//        double[][] dN = GaussInterpolation.countNfunctionForSurface(ksi, eta);
-
         element.setHbc(Hbc);
         return Hbc;
     }
@@ -248,12 +175,6 @@ public class MatrixForElement {
             double[][] jacobian = generateJacobianForElement(element, dNdKsi[p], dNdEta[p]);
             double detJacobian = (jacobian[0][0] * jacobian[1][1]) - (jacobian[0][1] * jacobian[1][0]);
 
-//            System.out.println("Jacobian for: " + (p + 1) + " integration point");
-//            GlobalConstants.printMatrixNxM(jacobian, 2, 2);
-//            System.out.println("Det[J]=" + detJacobian);
-//            System.out.println();
-
-
             double[][] reverseJacobian = new double[2][2];
             reverseJacobian[0][0] = jacobian[1][1];
             reverseJacobian[0][1] = -jacobian[0][1];
@@ -265,9 +186,6 @@ public class MatrixForElement {
             reverseJacobian[1][0] = (1 / detJacobian) * reverseJacobian[1][0];
             reverseJacobian[1][1] = (1 / detJacobian) * reverseJacobian[1][1];
 
-//            System.out.println("Reverse Jacobian for: " + (p + 1) + " integration point");
-//            GlobalConstants.printMatrixNxM(reverseJacobian, 2, 2);
-//            System.out.println();
 
             double[][] dNdKsidEta = new double[2][4];
             dNdKsidEta[0][0] = dNdKsi[p][0];
