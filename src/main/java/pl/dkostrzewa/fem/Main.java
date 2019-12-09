@@ -58,13 +58,12 @@ public class Main {
             MatrixForElement.generateH(element, ksi, eta, globals);
             MatrixForElement.generateC(element, ksi, eta, shapeFunctions, globals);
             MatrixForElement.generateHbc(element, globals);
-           // System.out.println();
-           // System.out.println("MATRIX [H]: ");
-           // GlobalConstants.printMatrixNxM(element.getH(), 4, 4);
+            MatrixForElement.generateP(element, globals);
+            // System.out.println();
+            // System.out.println("MATRIX [H]: ");
+            // GlobalConstants.printMatrixNxM(element.getH(), 4, 4);
             //System.out.println("MATRIX [C]: ");
             //GlobalConstants.printMatrixNxM(element.getC(), 4, 4);
-
-
 
 
         }
@@ -73,8 +72,8 @@ public class Main {
         System.out.println();
         System.out.println();
         Scanner keyboard = new Scanner(System.in);
-        System.out.println("Select Finite Element <1,"+(femGrid.getElements().size())+">");
-        int elementNo = keyboard.nextInt()-1;
+        System.out.println("Select Finite Element <1," + (femGrid.getElements().size()) + ">");
+        int elementNo = keyboard.nextInt() - 1;
         Element el = femGrid.getElements().get(elementNo);
         System.out.println(el);
         System.out.println("MATRIX [H]: ");

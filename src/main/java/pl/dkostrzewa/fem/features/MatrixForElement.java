@@ -26,10 +26,36 @@ public class MatrixForElement {
         return jacobian;
     }
 
-    public static double[] generateP(Element element, double[][] dN, Globals globals) {
-        double[] P = new double[4];
-        for (int p = 0; p < 4; p++) {
+    public static double[][] generateP(Element element, Globals globals) {
+        double[][] P = new double[2][4];
+        double pc = 1 / Math.sqrt(3);
 
+        List<Node> nodes = element.getNodes();
+        for (int i = 0; i < 4; i++) {
+            double[] ksiEtaPow = GlobalConstants.ksiEtaSurface[i];
+            double[] ksiPow = {ksiEtaPow[0], ksiEtaPow[2]};
+            double[] etaPow = {ksiEtaPow[1], ksiEtaPow[3]};
+
+            double[][] pow = new double[2][4];
+            for (int j = 0; j < 2; j++) {
+                pow = GaussInterpolation.countNfunctionForSurface(ksiPow, etaPow);
+            }
+            double lPow;
+
+            //pow 4
+            if (i == 3) {
+                lPow = Math.sqrt(Math.pow(nodes.get(0).getX() - nodes.get(3).getX(), 2) + Math.pow(nodes.get(0).getY() - nodes.get(3).getY(), 2));
+            }
+            else{
+                lPow = Math.sqrt(Math.pow(nodes.get(i+1).getX() - nodes.get(i).getX(), 2) + Math.pow(nodes.get(i+1).getY() - nodes.get(i).getY(), 2));
+            }
+            double detPow = lPow / 2;
+
+            for (int k = 0; k < pow.length; k++) {
+                for (int j = 0; j < pow[k].length; j++) {
+                    P[k][j] += pow[k][j]*globals.getAlfa()*globals.getT()*detPow;
+                }
+            }
         }
         return P;
     }

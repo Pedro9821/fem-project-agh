@@ -210,6 +210,14 @@ public class Globals {
         return k;
     }
 
+    public double getT() {
+        return T;
+    }
+
+    public void setT(double t) {
+        T = t;
+    }
+
     public double getAlfa() {
         return alfa;
     }
