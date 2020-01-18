@@ -124,5 +124,24 @@ public class GlobalConstants {
         }
     }
 
+    public static void printVector(double[] V, int l) {
+        for (int i = 0; i < l; i++) {
+            System.out.print(V[i] +"\t");
+        }
+        System.out.println();
+    }
+
+    public static double[] MatrixXVector(double M[][], double V[]){
+        double [] newV = new double[V.length];
+        for(int i = 0; i < M.length; i++){
+            int value = 0;
+            for(int j = 0; j < M[i].length; j++){
+                value += M[i][j] * V[j];
+            }
+            newV[i] = value;
+        }
+        return newV;
+    }
+
 
 }
