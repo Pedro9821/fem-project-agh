@@ -8,6 +8,7 @@ public class Element {
     private double[][] H = new double[4][4];
     private double[][] C = new double[4][4];
     private double[][] Hbc = new double[4][4];
+    private double[] P = new double[4];
 
     public double[][] getC() {
         return C;
@@ -52,6 +53,14 @@ public class Element {
 
     public void setNodes(List<Node> nodes) {
         this.nodes = nodes;
+    }
+
+    public double[] getP() {
+        return P;
+    }
+
+    public void setP(double[] p) {
+        P = p;
     }
 
     @Override

@@ -48,6 +48,14 @@ public class Node {
         this.id = id;
     }
 
+    public double getT() {
+        return t;
+    }
+
+    public void setT(double t) {
+        this.t = t;
+    }
+
     @Override
     public String toString() {
         return "Node{" +

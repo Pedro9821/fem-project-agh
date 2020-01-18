@@ -26,38 +26,66 @@ public class MatrixForElement {
         return jacobian;
     }
 
-    public static double[][] generateP(Element element, Globals globals) {
+    public static double[] generateP(Element element, Globals globals) {
         double[][] P = new double[2][4];
+        double[] vectorP = new double[4];
         double pc = 1 / Math.sqrt(3);
 
         List<Node> nodes = element.getNodes();
-        for (int i = 0; i < 4; i++) {
-            double[] ksiEtaPow = GlobalConstants.ksiEtaSurface[i];
-            double[] ksiPow = {ksiEtaPow[0], ksiEtaPow[2]};
-            double[] etaPow = {ksiEtaPow[1], ksiEtaPow[3]};
 
-            double[][] pow = new double[2][4];
-            for (int j = 0; j < 2; j++) {
-                pow = GaussInterpolation.countNfunctionForSurface(ksiPow, etaPow);
-            }
-            double lPow;
+        boolean[] isBc = new boolean[4];
+        boolean[] isBcPow = new boolean[4];
 
-            //pow 4
+        for (int i = 0; i < nodes.size(); i++) {
+            isBc[i] = nodes.get(i).isBc();
+        }
+        for (int i = 0; i <= 3; i++) {
             if (i == 3) {
-                lPow = Math.sqrt(Math.pow(nodes.get(0).getX() - nodes.get(3).getX(), 2) + Math.pow(nodes.get(0).getY() - nodes.get(3).getY(), 2));
-            }
-            else{
-                lPow = Math.sqrt(Math.pow(nodes.get(i+1).getX() - nodes.get(i).getX(), 2) + Math.pow(nodes.get(i+1).getY() - nodes.get(i).getY(), 2));
-            }
-            double detPow = lPow / 2;
-
-            for (int k = 0; k < pow.length; k++) {
-                for (int j = 0; j < pow[k].length; j++) {
-                    P[k][j] += pow[k][j]*globals.getAlfa()*globals.getT()*detPow;
+                if (isBc[3] && isBc[0]) {
+                    isBcPow[3] = true;
                 }
+            } else if (isBc[i] && isBc[i + 1]) {
+                isBcPow[i] = true;
+            }
+
+        }
+
+
+        for (int i = 0; i < 4; i++) {
+            if (isBcPow[i]) {
+                double[] ksiEtaPow = GlobalConstants.ksiEtaSurface[i];
+                double[] ksiPow = {ksiEtaPow[0], ksiEtaPow[2]};
+                double[] etaPow = {ksiEtaPow[1], ksiEtaPow[3]};
+
+                double[][] pow = new double[2][4];
+                for (int j = 0; j < 2; j++) {
+                    pow = GaussInterpolation.countNfunctionForSurface(ksiPow, etaPow);
+                }
+                double lPow;
+
+                //pow 4
+                if (i == 3) {
+                    lPow = Math.sqrt(Math.pow(nodes.get(0).getX() - nodes.get(3).getX(), 2) + Math.pow(nodes.get(0).getY() - nodes.get(3).getY(), 2));
+                } else {
+                    lPow = Math.sqrt(Math.pow(nodes.get(i + 1).getX() - nodes.get(i).getX(), 2) + Math.pow(nodes.get(i + 1).getY() - nodes.get(i).getY(), 2));
+                }
+                double detPow = lPow / 2;
+
+                for (int k = 0; k < pow.length; k++) {
+                    for (int j = 0; j < pow[k].length; j++) {
+                        P[k][j] += pow[k][j] * (-globals.getAlfa()) * globals.getT_oo() * detPow;
+                    }
+                }
+
+
             }
         }
-        return P;
+        for (int j = 0; j < 4; j++) {
+            vectorP[j] = P[0][j] + P[1][j];
+        }
+        element.setP(vectorP);
+
+        return vectorP;
     }
 
     public static double[][] generateHbc(Element element, Globals globals) {
@@ -98,9 +126,8 @@ public class MatrixForElement {
                 //pow 4
                 if (i == 3) {
                     lPow = Math.sqrt(Math.pow(nodes.get(0).getX() - nodes.get(3).getX(), 2) + Math.pow(nodes.get(0).getY() - nodes.get(3).getY(), 2));
-                }
-                else{
-                    lPow = Math.sqrt(Math.pow(nodes.get(i+1).getX() - nodes.get(i).getX(), 2) + Math.pow(nodes.get(i+1).getY() - nodes.get(i).getY(), 2));
+                } else {
+                    lPow = Math.sqrt(Math.pow(nodes.get(i + 1).getX() - nodes.get(i).getX(), 2) + Math.pow(nodes.get(i + 1).getY() - nodes.get(i).getY(), 2));
                 }
                 double detPow = lPow / 2;
 
@@ -135,79 +162,6 @@ public class MatrixForElement {
             }
         }
 
-
-//        double[] ksiPow1 = new double[2];
-//        double[] etaPow1 = new double[2];
-//
-//        double[] ksiPow2 = new double[2];
-//        double[] etaPow2 = new double[2];
-//
-//        double[] ksiPow3 = new double[2];
-//        double[] etaPow3 = new double[2];
-//
-//        double[] ksiPow4 = new double[2];
-//        double[] etaPow4 = new double[2];
-//
-//        ksiPow1[0] = -pc;
-//        ksiPow1[1] = pc;
-//        etaPow1[0] = -1;
-//        etaPow1[1] = -1;
-//
-//        ksiPow2[0] = 1;
-//        ksiPow2[1] = 1;
-//        etaPow2[0] = -pc;
-//        etaPow2[1] = pc;
-//
-//        ksiPow3[0] = pc;
-//        ksiPow3[1] = -pc;
-//        etaPow3[0] = 1;
-//        etaPow3[1] = 1;
-//
-//        ksiPow4[0] = -1;
-//        ksiPow4[1] = -1;
-//        etaPow4[0] = pc;
-//        etaPow4[1] = -pc;
-//
-//
-//        double[][] pow1 = new double[2][4];
-//        double[][] pow2 = new double[2][4];
-//        double[][] pow3 = new double[2][4];
-//        double[][] pow4 = new double[2][4];
-//
-//
-//        for (int i = 0; i < 2; i++) {
-//            pow1 = GaussInterpolation.countNfunctionForSurface(ksiPow1, etaPow1);
-//            pow2 = GaussInterpolation.countNfunctionForSurface(ksiPow2, etaPow2);
-//            pow3 = GaussInterpolation.countNfunctionForSurface(ksiPow3, etaPow3);
-//            pow4 = GaussInterpolation.countNfunctionForSurface(ksiPow4, etaPow4);
-//        }
-//
-//        double lPow1 = Math.sqrt(Math.pow(nodes.get(1).getX() - nodes.get(0).getX(), 2) + Math.pow(nodes.get(1).getY() - nodes.get(0).getY(), 2));
-//        double detPow1 = lPow1 / 2;
-//        double[][] POW1_1 = VxV(pow1[0], pow1[0]);
-//        double[][] POW1_2 = VxV(pow1[1], pow1[1]);
-//
-//
-//        for (int i = 0; i < POW1_1.length; i++) {
-//            for (int j = 0; j < POW1_1[i].length; j++) {
-//                POW1_1[i][j] *= globals.getAlfa();
-//            }
-//        }
-//
-//        for (int i = 0; i < POW1_2.length; i++) {
-//            for (int j = 0; j < POW1_2[i].length; j++) {
-//                POW1_2[i][j] *= globals.getAlfa();
-//            }
-//        }
-//
-//        double[][] POW1 = sumMatrix(POW1_1, POW1_2);
-//        for (int i = 0; i < POW1.length; i++) {
-//            for (int j = 0; j < POW1[i].length; j++) {
-//                POW1[i][j] *= detPow1;
-//            }
-//        }
-
-//        double[][] dN = GaussInterpolation.countNfunctionForSurface(ksi, eta);
 
         element.setHbc(Hbc);
         return Hbc;
@@ -361,5 +315,22 @@ public class MatrixForElement {
             }
         }
         return C;
+    }
+
+    //Polaczenie macierzy H i Hbc
+    public static void combineH(Element element) {
+        double [][] Hlocal = element.getH();
+        double [][] Hbc = element.getHbc();
+        double [][] H = new double[Hlocal.length][Hlocal.length];
+
+
+        for(int i=0;i<Hlocal.length;i++){
+            for(int j=0;j<Hlocal[i].length;j++){
+                H[i][j] += Hlocal[i][j] + Hbc[i][j];
+            }
+        }
+
+        element.setH(H);
+
     }
 }
