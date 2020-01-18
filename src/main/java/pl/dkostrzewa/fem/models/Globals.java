@@ -7,10 +7,9 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 public class Globals {
     private double H;
@@ -22,11 +21,13 @@ public class Globals {
 
     private double nN;
     private double nE;
-    private double k;
-    private double c;
-    private double ro;
-    private double alfa;
-    private double T;
+    private double k; //conductivity [W/mC]
+    private double c; //specific heat [J/kgC]
+    private double ro; //density [kg/m3]
+    private double alfa; //alfa [W/m2K]
+    private double T_oo; //ambient temperature [C]
+    private double stepTime;
+    private double initialTemperature; //initial temperature
 
     private List<Double> pc = new ArrayList<>();
     private List<GaussInterpolationNode> integrationPoints = new ArrayList<>();
@@ -44,7 +45,17 @@ public class Globals {
         JSONParser jsonParser = new JSONParser();
 
         try {
-            Object object = jsonParser.parse(new FileReader(System.getProperty("user.dir") + "/src/main/java/pl/dkostrzewa/fem/data/femdata.json"));
+            System.out.println("Select Test Case (1 or 2)");
+            Scanner scanner = new Scanner(System.in);
+            int testCase = scanner.nextInt();
+            Object object;
+            if(testCase == 1){
+                object = jsonParser.parse(new FileReader(System.getProperty("user.dir") + "/src/main/java/pl/dkostrzewa/fem/data/femdata.json"));
+            }
+            else {
+                object = jsonParser.parse(new FileReader(System.getProperty("user.dir") + "/src/main/java/pl/dkostrzewa/fem/data/femdata2.json"));
+            }
+
             //Read JSON file
             JSONObject jsonObject = (JSONObject) object;
 
@@ -56,7 +67,9 @@ public class Globals {
             this.c = (double) jsonObject.get("c");
             this.ro = (double) jsonObject.get("ro");
             this.alfa = (double) jsonObject.get("alfa");
-            this.T = (double) jsonObject.get("T");
+            this.T_oo = (double) jsonObject.get("T_oo");
+            this.stepTime =  (double) jsonObject.get("stepTime");
+            this.initialTemperature = (double) jsonObject.get("initialTemperature");
             this.nN = this.nH * this.nW;
             this.nE = (nH - 1) * (nW - 1);
 
@@ -210,12 +223,12 @@ public class Globals {
         return k;
     }
 
-    public double getT() {
-        return T;
+    public double getInitialTemperature() {
+        return initialTemperature;
     }
 
-    public void setT(double t) {
-        T = t;
+    public void setInitialTemperature(double initialTemperature) {
+        this.initialTemperature = initialTemperature;
     }
 
     public double getAlfa() {
@@ -230,6 +243,22 @@ public class Globals {
         this.k = k;
     }
 
+    public double getStepTime() {
+        return stepTime;
+    }
+
+    public void setStepTime(double stepTime) {
+        this.stepTime = stepTime;
+    }
+
+    public double getT_oo() {
+        return T_oo;
+    }
+
+    public void setT_oo(double t_oo) {
+        T_oo = t_oo;
+    }
+
     @Override
     public String toString() {
         return "Globals{" +
@@ -239,7 +268,15 @@ public class Globals {
                 ", nW=" + nW +
                 ", nN=" + nN +
                 ", nE=" + nE +
+                ", k=" + k +
+                ", c=" + c +
+                ", ro=" + ro +
+                ", alfa=" + alfa +
+                ", T_oo=" + T_oo +
+                ", stepTime=" + stepTime +
+                ", initialTemperature=" + initialTemperature +
                 ", pc=" + pc +
+                ", integrationPoints=" + integrationPoints +
                 ", countPc=" + countPc +
                 ", wagi=" + wagi +
                 ", countWagi=" + countWagi +

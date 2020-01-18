@@ -51,6 +51,9 @@ public class FemGridGenerator {
                 node.setX(x);
                 node.setY(y);
                 node.setId(nodeId);
+
+                double initialT = globals.getInitialTemperature();
+                node.setT(initialT);
                 femGridNodes.add(node);
             }
         }
